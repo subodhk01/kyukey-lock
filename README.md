@@ -1,2 +1,2 @@
 # kyukey-lock
-WebApp to access, manage and control the iot KyuKey lock.
+Webapp to access, monitor and control KyuKey lock.
