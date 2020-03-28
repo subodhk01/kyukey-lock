@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lock Status | KyuKey</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Salsa&display=swap" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="{% static 'css/mobiscroll.jquery.min.css' %}">
+        <script src="{% static 'js/mobiscroll.jquery.min.js' %}"></script>
+        
+
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    </head>
+    <body>
+        <div>
+            <div class="heading-container">
+                <div class="heading-inside">
+                    <span>KyuKey</span>
+                </div>
+            </div>
+
+            
+
+            <div class="content-container">
+                <div class="ham-menu">
+                    <img src="{% static 'images/ham.jpg' %}" onclick="toogle_hide()" height="60">
+                </div>
+                <div class="content-inside">
+                    <div class="card1" id="user_info">
+                        <div class="card1-header right-head">User Info</div>
+                        <div class="card1-body status-body">
+                            <div>Hi, {{user}}</div><br>
+                            <!-- <div>{{user.email}}</div><br> -->
+                            <div style="text-align: center;"><a class="btn btn-warning" href="/logout">Logout</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="otp-generator-card">
+                <div class="card">
+                    <div class="card-header">
+                        Generate OTP
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Key Name:</label>
+                                <input class="form-control" placeholder="Name" name="name" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label>Valid Till:</label>
+                                <input mbsc-input data-input-style="box" data-label-style="stacked" id="demo-datetime" name="validity"/>
+                            </div>
+                            <div class="form-group" style="text-align: center;">
+                                <input type="submit" class="btn btn-primary" value="Generate OTP">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+       
+
+        <script>
+            function toogle_hide() {
+                var x = document.getElementById("user_info");
+                if (x.style.height == "auto") {
+                  x.style.height = "0px";
+                } else {
+                  x.style.height = "auto";
+                }
+              }
+        </script>
+
+        <script>
+
+mobiscroll.settings = {
+    theme: 'ios',
+    themeVariant: 'light',
+    display: 'bubble'
+};
+
+$(function () {
+
+    var now = new Date();
+
+    $('#demo-datetime').mobiscroll().datetime({
+        min: '{{lowerLimit}}',
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'HH:ii',
+        dateWheels: '|D M d|',
+        onInit: function (event, inst) {
+            inst.setVal(now, true);
+        }
+    });
+
+    var instance = $('#demo-datetime-external').mobiscroll().datetime({
+        showOnTap: false,
+        showOnFocus: false,
+        onInit: function (event, inst) {
+            inst.setVal(new Date(), true);
+        }
+    }).mobiscroll('getInst');
+
+    $('#show-demo-datetime-external').click(function () {
+        instance.show();
+        return false;
+    });
+
+});
+
+        </script>
+
+    </body>
+</html>

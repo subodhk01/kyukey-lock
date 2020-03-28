@@ -9,7 +9,9 @@ class Lock(models.Model):
 
 class OTP(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, null=True)
     time_created = models.DateTimeField(auto_now_add=True)
+    time_remaining = models.CharField(max_length=50, default=None, null=True)
     content = models.CharField(max_length=10)
     lock = models.ForeignKey(Lock, on_delete=models.CASCADE)
     valid_till = models.DateTimeField()
