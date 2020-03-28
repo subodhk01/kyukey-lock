@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 
 from .models import *
 import datetime
@@ -13,6 +13,15 @@ def index(request):
         return render(request, 'index.html', {'otps': otps})
     else:
         return redirect('login')
+
+def remove_otp(request, otp_id):
+    try:
+        otp = OTP.objects.get(pk=otp_id)
+        otp.delete()
+        return HttpResponse('OTP removed successfully',otp_id)
+    except:
+        return HttpResponse(status = 404)
+    
 
 def generate_otp(request):
     if request.method == "POST":
