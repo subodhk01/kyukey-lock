@@ -21,3 +21,11 @@ class OTP(models.Model):
 
     class Meta:
         ordering = ['lock']
+
+class History(models.Model):
+    id = models.AutoField(primary_key=True)
+    lock = models.ForeignKey(Lock, on_delete=models.SET_NULL, null=True)
+    otp = models.ForeignKey(OTP, on_delete=models.SET_NULL, null=True)
+    time = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20)
+

@@ -8,3 +8,7 @@ class LockAdmin(admin.ModelAdmin):
 @admin.register(OTP)
 class OTPAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'lock', 'time_created', 'time_remaining', 'content', 'valid_till')
+
+@admin.register(History)
+class HistoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'lock', 'time','status', 'otp')

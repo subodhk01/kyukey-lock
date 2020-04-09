@@ -62,23 +62,27 @@
             <div class="otp-generator-card">
                 <div class="card">
                     <div class="card-header">
-                        Generate OTP
+                        Lock History
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label>Key Name:</label>
-                                <input class="form-control" placeholder="Name" name="name" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Valid Till:</label>
-                                <input type="text" id="datetime" name="validity" />
-                            </div>
-                            <div class="form-group" style="text-align: center;">
-                                <input type="submit" class="btn btn-warning" value="Generate OTP">
-                            </div>
-                        </form>
+                        <table class="table">
+                            <thead>
+                                <th>
+                                    <td>ID.</td>
+                                    <td>Time</td>
+                                    <td>Status</td>
+                                </th>
+                            </thead>
+                            <tbody>
+                                {% for entry in history %}
+                                    <tr>
+                                        <td>{{ entry.id }}</td>
+                                        <td>{{ entry.time }}</td>
+                                        <td>{{ entry.status }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

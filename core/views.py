@@ -51,6 +51,10 @@ def generate_otp(request):
         lowerLimit = datetime.datetime.now()
         return render(request, 'generate_otp.html', {'lowerLimit': lowerLimit})
 
+def lock_history(request):
+    history  = History.objects.all()
+    return render(request, 'history.html', {'history' : history})
+
 def user_login(request):
     """User login view."""
     if request.user.is_authenticated :
