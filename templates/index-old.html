@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lock Status | KyuKey</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Salsa&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    </head>
+    <body>
+        <script>
+                $.ajax({
+                    method: "POST",
+                    url: "/",
+                    data: {
+                        'csrfmiddlewaretoken': '{{csrf_token}}',
+                    },
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log('Error');
+                        console.log(data);                 
+                    }
+                })
+        </script>
+        <div>
+
+            <div class="heading-container">
+                <div class="heading-inside">
+                    <span>KyuKey</span>
+                </div>
+            </div>
+
+            
+
+            <div class="content-container">
+                <div class="ham-menu">
+                    <img src="{% static 'images/ham.jpg' %}" onclick="toogle_hide()" height="60">
+                </div>
+                <div class="content-inside">
+                    <div class="card1" id="user_info">
+                        <div class="card1-header right-head">User Info</div>
+                        <div class="card1-body status-body">
+                            <div>Hi, {{user}}</div>
+                            <!-- <div>{{user.email}}</div><br> -->
+                            <div style="text-align: center; margin-top: 10px;"><a class="btn btn-warning" href="/logout">Logout</a></div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center;margin-bottom: 30px;">
+                        <button class="btn btn-warning" type="button" id="loadingbuttontop" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
+                    </div>
+
+                    <div class="container">
+                        <div class="card" id="status-unlocked">
+                            <div class="card-header">Lock Status</div>
+                            <div class="card-body">
+                                <span class="dot-green"></span>UNLOCKED
+                            </div>
+                        </div>
+                        <div class="card" id="status-locked">
+                            <div class="card-header">Lock Status</div>
+                            <div class="card-body">
+                                <span class="dot-red"></span>LOCKED
+                            </div>
+                        </div>
+                        <!-- <div class="card" id="otp-table">
+                            <div class="card-header">OTPS</div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>OTP</th>
+                                            <th>Expires in</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for otp in otps %}
+                                            <tr>
+                                                <td>{{ otp.name }}</td>
+                                                <td>{{ otp.content }}</td>
+                                                <td>{{ otp.time_remaining }}</td>
+                                                <td style="text-align: center;">
+                                                    <a href="" data-toggle="modal" data-target="#myModal{{otp.id}}">
+                                                        <img src="{% static 'images/delete-icon.png' %}" style="width: 30px;" />
+                                                    </a>
+                                                    <div class="modal fade" id="myModal{{otp.id}}">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <h4 class="modal-title">Remove OTP</h4>
+                                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Name: {{ otp.name }}<br>
+                                                                Expires in: {{ otp.time_remaining }}
+                                                            </div>                                           
+                                                            <div class="modal-footer">
+                                                                <a href="/remove_otp/{{otp.id}}" class="btn btn-danger">Remove</a>
+                                                              <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                      
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                </td>
+                                            </tr> 
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="card1" id="lock-error" style="display: none;">
+                        <div class="card1-header">Lock Status</div>
+                        <div class="card1-body status-body"><span class="dot-red"></span>Unable to fetch lock status, try again.</div>
+                    </div>
+
+                    <div class="card1" id="lock-invalid" style="display: none;">
+                        <div class="card1-header">Lock Status</div>
+                        <div class="card1-body status-body"><span class="dot-red"></span>Invalid Lock status, contact admin.</div>
+                    </div>
+                <hr>
+                <div style="text-align: center;">
+                    <a href="lock_history" target="_blank"><button class="btn btn-primary">Lock History</button></a>
+                </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            function toogle_hide() {
+                var x = document.getElementById("user_info");
+                if (x.style.height == "auto") {
+                  x.style.height = "0px";
+                } else {
+                  x.style.height = "auto";
+                }
+              }
+        </script>
+    </body>
+</html>

@@ -9,6 +9,17 @@ import datetime
 
 def index(request):
     if request.user.is_authenticated:
+        if request.is_ajax() and request.method == "POST":
+            lock = Lock.objects.get(pk=1)
+            pre_status = lock.status.lower()
+            status = ""
+            if pre_status == "unlocked" or pre_status == "open":
+                status = 'u'
+            elif pre_status == "locked" or pre_status == "closed":
+                status = 'l'
+            else:
+                status = 'e'
+            return JsonResponse({'status':status})
         otps = OTP.objects.all()
         return render(request, 'index.html', {'otps': otps})
     else:
@@ -18,7 +29,7 @@ def remove_otp(request, otp_id):
     try:
         otp = OTP.objects.get(pk=otp_id)
         otp.delete()
-        return HttpResponse('OTP removed successfully',otp_id)
+        return redirect(index)
     except:
         return HttpResponse(status = 404)
     

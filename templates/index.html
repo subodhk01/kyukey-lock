@@ -6,9 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Salsa&display=swap" rel="stylesheet">
+        <meta name="theme-color" content="rgba(223, 34, 34, 0.918)" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -16,149 +14,125 @@
     </head>
     <body>
         <script>
-                $.ajax({
-                    method: "POST",
-                    url: "/",
-                    data: {
-                        'csrfmiddlewaretoken': '{{csrf_token}}',
-                    },
-                    success: function(data){
-                        console.log(data);
-                    },
-                    error: function(data){
-                        console.log('Error');
-                        console.log(data);                 
-                    }
-                })
+                setInterval(
+                function() {
+                    $.ajax({
+                        method: "POST",
+                        url: "/",
+                        data: {
+                            'csrfmiddlewaretoken': '{{csrf_token}}',
+                        },
+                        success: function(data){
+                            console.log(data);
+                            if(data['status']=='u'){
+                                $('.outer-container').css('background','rgb(22, 199, 64)');
+                                $('meta[name=theme-color]').attr('content', 'rgb(22, 199, 64)');
+                                $('#locked-container').fadeOut();
+                                $('#warning-container').fadeOut();
+                                $('#unlocked-container').fadeIn();
+                                
+                            }
+                            else if(data['status']=='l'){
+                                $('.outer-container').css('background','rgb(15, 150, 228)');
+                                $('meta[name=theme-color]').attr('content', 'rgb(15, 150, 228)');
+                                $('#unlocked-container').fadeOut();
+                                $('#warning-container').fadeOut();
+                                $('#locked-container').fadeIn();
+                            }
+                            else{
+                                $('.outer-container').css('background','rgba(223, 34, 34, 0.918)');
+                                $('meta[name=theme-color]').attr('content', 'rgba(223, 34, 34, 0.918)');
+                                $('#unlocked-container').fadeOut();
+                                $('#locked-container').fadeOut();
+                                $('#warning-container').fadeIn();
+                            }
+                        },
+                        error: function(data){
+                            console.log('Error');
+                            console.log(data);                 
+                        }
+                    })
+                }, 1000);
         </script>
-        <div>
-
-            <div class="heading-container">
-                <div class="heading-inside">
-                    <span>KyuKey</span>
-                </div>
+        <div class="outer-container" id="backcontainer">
+            <div class="top-nav-container">
+                <nav class="navbar navbar-expand-md">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                      <div class="row">
+                        <div class="col-6">
+                            Hey, {{user}}
+                        </div>
+                        <div class="col-6">
+                            <a href="/logout" class="btn btn-info">Logout</a>
+                        </div>
+                      </div>
+                    </div>
+                  </nav>
             </div>
 
-            
-
-            <div class="content-container">
-                <div class="ham-menu">
-                    <img src="{% static 'images/ham.jpg' %}" onclick="toogle_hide()" height="60">
-                </div>
-                <div class="content-inside">
-                    <div class="card1" id="user_info">
-                        <div class="card1-header right-head">User Info</div>
-                        <div class="card1-body status-body">
-                            <div>Hi, {{user}}</div>
-                            <!-- <div>{{user.email}}</div><br> -->
-                            <div style="text-align: center; margin-top: 10px;"><a class="btn btn-warning" href="/logout">Logout</a></div>
-                        </div>
-                    </div>
-
-                    <div style="text-align: center;margin-bottom: 30px;">
-                        <button class="btn btn-warning" type="button" id="loadingbuttontop" disabled>
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                    </div>
-
-                    <div class="container">
-                        <div class="card" id="status-unlocked">
-                            <div class="card-header">Lock Status</div>
-                            <div class="card-body">
-                                <span class="dot-green"></span>UNLOCKED
-                            </div>
-                        </div>
-                        <div class="card" id="status-locked">
-                            <div class="card-header">Lock Status</div>
-                            <div class="card-body">
-                                <span class="dot-red"></span>LOCKED
-                            </div>
-                        </div>
-                        <div class="card" id="otp-table">
-                            <div class="card-header">OTPS</div>
-                            <div class="card-body">
-                                <table class="table table-curved table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>OTP</th>
-                                            <th>Expires in</th>
-                                            <th>Remove</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for otp in otps %}
-                                            <tr>
-                                                <td>{{ otp.name }}</td>
-                                                <td>{{ otp.content }}</td>
-                                                <td>{{ otp.time_remaining }}</td>
-                                                <td style="text-align: center;">
-                                                    <a href="" data-toggle="modal" data-target="#myModal{{otp.id}}">
-                                                        <img src="{% static 'images/delete-icon.png' %}" style="width: 30px;" />
-                                                    </a>
-                                                    <div class="modal fade" id="myModal{{otp.id}}">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                          <div class="modal-content">
-                                                      
-                                                            <!-- Modal Header -->
-                                                            <div class="modal-header">
-                                                              <h4 class="modal-title">Remove OTP</h4>
-                                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            </div>
-                                                      
-                                                            <!-- Modal body -->
-                                                            <div class="modal-body">
-                                                                Name: {{ otp.name }}<br>
-                                                                Expires in: {{ otp.time_remaining }}
-                                                            </div>
-                                                      
-                                                            <!-- Modal footer -->
-                                                            <div class="modal-footer">
-                                                                <a href="/remove_otp/{{otp.id}}" class="btn btn-danger">Remove</a>
-                                                              <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                                                            </div>
-                                                      
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                </td>
-                                            </tr> 
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card1" id="lock-error" style="display: none;">
-                        <div class="card1-header">Lock Status</div>
-                        <div class="card1-body status-body"><span class="dot-red"></span>Unable to fetch lock status, try again.</div>
-                    </div>
-
-                    <div class="card1" id="lock-invalid" style="display: none;">
-                        <div class="card1-header">Lock Status</div>
-                        <div class="card1-body status-body"><span class="dot-red"></span>Invalid Lock status, contact admin.</div>
-                    </div>
-                <hr>
-                <div style="text-align: center;">
-                    <a href="lock_history" target="_blank"><button class="btn btn-primary">Lock History</button></a>
-                </div>
-                </div>
-                </div>
+            <div class="lock-status-container" id="locked-container" style="display: none;">
+                <img src="{% static 'images/locks/locked.png'  %}"><br>
+                <h2>LOCKED</h2>
+            </div>
+            <div class="lock-status-container" id="unlocked-container" style="display: none;">
+                <img src="{% static 'images/locks/unlocked.png'  %}"><br>
+                <h2>UNLOCKED</h2>
+            </div>
+            <div class="lock-status-container" id="warning-container" style="display: none;">
+                <img src="{% static 'images/locks/warning.jpg' %}" style="box-shadow: 0px 0px 5px 2px rgb(82, 81, 81);border-radius: 100%;"><br>
+                <h2>NETWORK ERROR</h2>
+                <h6>Unable to fetch lock status</h6>
             </div>
 
+
+            <div class="bottom-nav-container">
+                <div class="row bottom-nav-row">
+                        <a href="/generate_otp" class="col-6">
+                                <img src="{% static 'images/locks/generate.png' %}"><br>
+                                <div class="bottom-nav-desciption">Generate OTP</div>
+                        </a>
+                        <a href="lock_history" class="col-6">
+                                <img src="{% static 'images/locks/history.jpg' %}"><br>
+                                <div class="bottom-nav-desciption">Lock History</div>
+                        </a>
+                    <!-- <div class="col-12 generate-otp-box">
+                        <h2>Generate OTP</h2>
+                        <form method="POST" action="/generate_otp">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label class="col-xs-4 col-form-label">Key Name:</label>
+                                <div class="col-xs-8">
+                                    <input class="form-control col" placeholder="Name" name="name" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-4 col-form-label">Valid Till:</label>
+                                <div class="col-xs-8">
+                                    <input mbsc-input data-input-style="box" data-label-style="stacked" id="demo-datetime" name="validity"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                                <div class="col-sm-10">
+                                  <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                </div>
+                              </div>
+                            <div class="form-group" style="text-align: center;">
+                                <input type="submit" class="btn btn-primary" value="Generate OTP">
+                            </div>
+                        </form>
+                    </div> -->
+                </div>
+            </div>
         </div>
-
-        <script>
-            function toogle_hide() {
-                var x = document.getElementById("user_info");
-                if (x.style.height == "auto") {
-                  x.style.height = "0px";
-                } else {
-                  x.style.height = "auto";
-                }
-              }
-        </script>
     </body>
 </html>
