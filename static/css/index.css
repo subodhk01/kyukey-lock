@@ -17,9 +17,6 @@ html,body {
     position: relative;
     display: flex;
     align-items: center;
-    background-size: 400%;
-    background-position: left;
-    animation: background-scroll 14s ease infinite;
     background: rgba(223, 34, 34, 0.918);
     transition:all 1.4s ease;
 }

@@ -11,15 +11,16 @@
         <link href="https://fonts.googleapis.com/css?family=Salsa&display=swap" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-        <link rel="stylesheet" href="{% static 'css/mobiscroll.jquery.min.css' %}">
-        <script src="{% static 'js/mobiscroll.jquery.min.js' %}"></script>
+        
         
 
         <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link rel="stylesheet" href="{% static 'css/secondary.css' %}">
     </head>
     <body>
-        <div>
+        <div class="secondary-outer-container">
             <div class="heading-container">
                 <div class="heading-inside">
                     <span>KyuKey</span>
@@ -29,7 +30,7 @@
             
 
             <div class="content-container">
-                <div class="ham-menu">
+                <!-- <div class="ham-menu">
                     <img src="{% static 'images/ham.jpg' %}" onclick="toogle_hide()" height="60">
                 </div>
                 <div class="content-inside">
@@ -37,11 +38,26 @@
                         <div class="card1-header right-head">User Info</div>
                         <div class="card1-body status-body">
                             <div>Hi, {{user}}</div><br>
-                            <!-- <div>{{user.email}}</div><br> -->
+                            <div>{{user.email}}</div><br> 
                             <div style="text-align: center;"><a class="btn btn-warning" href="/logout">Logout</a></div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <nav class="navbar navbar-expand-md">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                      <div class="row">
+                        <div class="col-6">
+                            Hey, {{user}}
+                        </div>
+                        <div class="col-6">
+                            <a href="/logout" class="btn btn-info">Logout</a>
+                        </div>
+                      </div>
+                    </div>
+                  </nav>
             </div>
             <div class="otp-generator-card">
                 <div class="card">
@@ -60,7 +76,7 @@
                                 <input mbsc-input data-input-style="box" data-label-style="stacked" id="demo-datetime" name="validity"/>
                             </div>
                             <div class="form-group" style="text-align: center;">
-                                <input type="submit" class="btn btn-primary" value="Generate OTP">
+                                <input type="submit" class="btn btn-warning" value="Generate OTP">
                             </div>
                         </form>
                     </div>
