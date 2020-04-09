@@ -23,6 +23,7 @@
                             'csrfmiddlewaretoken': '{{csrf_token}}',
                         },
                         success: function(data){
+                            $('#loadingbutton').hide();
                             console.log(data);
                             if(data['status']=='u'){
                                 $('.outer-container').css('background','rgb(22, 199, 64)');
@@ -78,6 +79,12 @@
                   </nav>
             </div>
 
+            <div id="loadingbutton">
+                <button class="btn btn-warning" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+            </div>
             <div class="lock-status-container" id="locked-container" style="display: none;">
                 <img src="{% static 'images/locks/locked.png'  %}"><br>
                 <h2>LOCKED</h2>

@@ -30,6 +30,11 @@ html,body {
     font-size: 26px;
     text-shadow: 0px 0px 10px rgb(21, 23, 31);
 }
+#loadingbutton{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+}
 .lock-status-container {
     width: 100%;
     text-align: center;
@@ -59,6 +64,9 @@ html,body {
 }
 .bottom-nav-row a {
     text-align: center;
+}
+.bottom-nav-row a:hover {
+    text-decoration: none;
 }
 .bottom-nav-row a img {
     height: 20px;
