@@ -61,7 +61,8 @@ html,body {
     text-align: center;
 }
 .bottom-nav-row a img {
-    height: 23px;
+    height: 20px;
+    opacity: 0.8;
 }
 .bottom-nav-desciption {
     color: grey;
