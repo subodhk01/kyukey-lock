@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'core.otp_validity_refresh.otpRefresh'
+    #'core.otp_validity_refresh.otpRefresh'
 ]
 
 ROOT_URLCONF = 'kyukey.urls'
