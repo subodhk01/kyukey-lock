@@ -10,16 +10,20 @@ import datetime
 def index(request):
     if request.user.is_authenticated:
         if request.is_ajax() and request.method == "POST":
-            lock = Lock.objects.get(pk=1)
-            pre_status = lock.status.lower()
-            status = ""
-            if pre_status == "unlocked" or pre_status == "open":
-                status = 'u'
-            elif pre_status == "locked" or pre_status == "closed":
-                status = 'l'
-            else:
+            try:
+                lock = Lock.objects.get(pk=1)
+                pre_status = lock.status.lower()
+                status = ""
+                if pre_status == "unlocked" or pre_status == "open":
+                    status = 'u'
+                elif pre_status == "locked" or pre_status == "closed":
+                    status = 'l'
+                else:
+                    status = 'e'
+                return JsonResponse({'status':status})
+            except:
                 status = 'e'
-            return JsonResponse({'status':status})
+                return JsonResponse({'status':status})
         otps = OTP.objects.all()
         return render(request, 'index.html', {'otps': otps})
     else:
