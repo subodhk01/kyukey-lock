@@ -60,9 +60,9 @@
                                 <input class="form-control" placeholder="Name" name="name" type="text">
                             </div>
                             <div class="form-group">
-                                <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label>
+                                <label for="dtp_input1" class="col-md-2 control-label">Valid till:</label>
                                 <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
-                                    <input class="form-control" size="16" type="text" name="validity" value="" readonly>
+                                    <input class="form-control" size="16" type="text" name="validity" value="Select DateTime" readonly>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                                 </div>
@@ -87,6 +87,7 @@
         <script type="text/javascript">
             $('.form_datetime').datetimepicker({
                 format: 'yyyy-mm-dd hh:ii',
+                startDate: '{{ lowerLimit }}'
             });
         </script>
 

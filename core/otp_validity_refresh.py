@@ -12,9 +12,9 @@ class otpRefresh(object):
             if(otp.valid_till.replace(tzinfo=pytz.UTC) + datetime.timedelta(hours=5, minutes=30) > datetime.datetime.now().replace(tzinfo=pytz.UTC)):
                 seconds = (otp.valid_till.replace(tzinfo=pytz.UTC) + datetime.timedelta(hours=5, minutes=30) -  datetime.datetime.now().replace(tzinfo=pytz.UTC)).seconds
                 if seconds > 7200 :
-                    otp.time_remaining = str(seconds//3600) + " hours " + str((seconds%3600)//60) + "minutes"
+                    otp.time_remaining = str(seconds//3600) + " hours " + str((seconds%3600)//60) + " minutes"
                 elif seconds > 3600 :
-                    otp.time_remaining = str(seconds//3600) + " hour " + str((seconds%3600)//60) + "minutes"
+                    otp.time_remaining = str(seconds//3600) + " hour " + str((seconds%3600)//60) + " minutes"
                 else:
                     otp.time_remaining = str((seconds%3600)//60) + "minutes"
             else:

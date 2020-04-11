@@ -53,6 +53,7 @@ def generate_otp(request):
         return HttpResponse('ok')
     else:
         lowerLimit = datetime.datetime.now()
+        lowerLimit = (str(lowerLimit)[0:16])
         return render(request, 'generate_otp.html', {'lowerLimit': lowerLimit})
 
 def lock_history(request):
