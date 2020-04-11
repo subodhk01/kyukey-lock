@@ -10,9 +10,10 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Salsa&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        
+
+        <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
 
         
 
@@ -30,19 +31,6 @@
             
 
             <div class="content-container">
-                <!-- <div class="ham-menu">
-                    <img src="{% static 'images/ham.jpg' %}" onclick="toogle_hide()" height="60">
-                </div>
-                <div class="content-inside">
-                    <div class="card1" id="user_info">
-                        <div class="card1-header right-head">User Info</div>
-                        <div class="card1-body status-body">
-                            <div>Hi, {{user}}</div><br>
-                            <div>{{user.email}}</div><br> 
-                            <div style="text-align: center;"><a class="btn btn-warning" href="/logout">Logout</a></div>
-                        </div>
-                    </div>
-                </div> -->
                 <nav class="navbar navbar-expand-md">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                       <span class="navbar-toggler-icon"></span>
@@ -72,8 +60,13 @@
                                 <input class="form-control" placeholder="Name" name="name" type="text">
                             </div>
                             <div class="form-group">
-                                <label>Valid Till:</label>
-                                <input type="text" id="datetime" name="validity" />
+                                <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label>
+                                <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
+                                    <input class="form-control" size="16" type="text" name="validity" value="" readonly>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <input type="hidden" id="dtp_input1" value="" /><br/>
                             </div>
                             <div class="form-group" style="text-align: center;">
                                 <input type="submit" class="btn btn-warning" value="Generate OTP">
@@ -88,19 +81,17 @@
             
 
         </div>
-       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}" charset="UTF-8"></script>
         <script type="text/javascript">
-            $(document).ready(function() {
-                $('#datetime').datetimepicker({
-                    format:'Y-m-d H:i',
-    inline:true
-                });
+            $('.form_datetime').datetimepicker({
+                format: 'yyyy-mm-dd hh:ii',
             });
         </script>
+
         
         
 
     </body>
-    <link rel="stylesheet" href="{% static 'css/jquery.datetimepicker.css' %}">
-        <script src="{% static 'js/jquery.datetimepicker.js' %}"></script>
 </html>
