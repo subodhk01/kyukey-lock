@@ -49,8 +49,12 @@
                             }
                         },
                         error: function(data){
-                            console.log('Error');
-                            console.log(data);                 
+                            console.log("I'm a magical error that even bypassed the try-except :-)");
+                            $('.outer-container').css('background','rgba(223, 34, 34, 0.918)');
+                            $('meta[name=theme-color]').attr('content', 'rgba(223, 34, 34, 0.918)');
+                            $('#unlocked-container').fadeOut();
+                            $('#locked-container').fadeOut();
+                            $('#warning-container').fadeIn();                
                         }
                     })
                 }, 1000);
