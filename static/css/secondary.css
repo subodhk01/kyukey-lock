@@ -32,7 +32,8 @@ body {
 }
 .heading-container {
     position: absolute;
-    width: 100%;
+    width: 50%;
+    z-index: 1;
     top: 0;
     color: white;
     font-family: 'Roboto Condensed';
