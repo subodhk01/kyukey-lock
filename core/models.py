@@ -15,6 +15,7 @@ class OTP(models.Model):
     content = models.CharField(max_length=10)
     lock = models.ForeignKey(Lock, on_delete=models.CASCADE)
     valid_till = models.DateTimeField()
+    visibility = models.BooleanField(default=1)
 
     def __str__(self):
         return "Lock(%s) : %s" % (self.lock, self.content)

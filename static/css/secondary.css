@@ -79,3 +79,23 @@ body {
     box-shadow: 0px 0px 10px 3px rgb(51, 105, 167);
     padding: 30px;
 }
+
+.otp-info {
+    text-align: center;
+}
+.otp-info h1 {
+    font-family: 'Roboto Condensed';
+}
+.loading-otp {
+    margin: 20px 0px;
+}
+.error-otp {
+    color: red;
+    text-align: center;
+}
+.return-home {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    color: rgb(233, 227, 227);
+}

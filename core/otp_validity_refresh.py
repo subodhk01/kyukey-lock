@@ -7,6 +7,9 @@ class otpRefresh(object):
         self.get_response = get_response
     def __call__(self, request):
         otps = OTP.objects.all()
+        if len(otps) == 0:
+            response = self.get_response(request)
+            return response
         for otp in otps:
             #print(otp.valid_till + datetime.timedelta(hours=5, minutes=30) ,datetime.datetime.now())
             if(otp.valid_till.replace(tzinfo=pytz.UTC) + datetime.timedelta(hours=5, minutes=30) > datetime.datetime.now().replace(tzinfo=pytz.UTC)):

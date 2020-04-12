@@ -8,6 +8,16 @@ import datetime
 from dateutil import tz
 
 
+
+import math, random
+def OTPgenerator():
+    """Generates a random 4 digit OTP"""
+    digits = ['1','2','3','4','5','6','7','8','9','0']
+    OTP = []
+    for i in range(4):
+        OTP += digits[ math.floor(random.random() * 10) ]
+    return "".join(OTP)
+
 def index(request):
     if request.user.is_authenticated:
         if request.is_ajax() and request.method == "POST":
@@ -51,18 +61,44 @@ def generate_otp(request):
             lowerLimit = (str(lowerLimit)[0:16])
             return render(request, 'generate_otp.html', {'lowerLimit': lowerLimit, 'msg':'Enter a Valid DateTime'})
         print(djvalidity)
+        try:
+            lock = Lock.objects.get(pk=1)
+        except:
+            lowerLimit = datetime.datetime.now()
+            lowerLimit = (str(lowerLimit)[0:16])
+            return render(request, 'generate_otp.html', {'lowerLimit': lowerLimit, 'msg':'No Lock found, contact your Administrator'})
         otp = OTP(
             name = request.POST['name'],
-            content = 1234,
+            content = OTPgenerator(),
             lock = Lock.objects.get(pk=1),
             valid_till = djvalidity
         )
         otp.save()
-        return HttpResponse('ok')
+        return redirect('generation_success', id = otp.id)
     else:
         lowerLimit = datetime.datetime.now()
         lowerLimit = (str(lowerLimit)[0:16])
         return render(request, 'generate_otp.html', {'lowerLimit': lowerLimit})
+
+def generation_success(request, id):
+    try:    
+        otp = OTP.objects.get(pk=id)
+        if otp.visibility == False:
+            return redirect('index')
+    except:
+        return redirect('index')
+    return render(request, 'generation_success.html', {'otp':otp, 'id':id})
+
+def hide_otp(request):
+    if request.is_ajax() and request.method == "POST":
+        id = request.POST["id"]
+        print(id , type(id))
+        otp = OTP.objects.get(pk=id)
+        otp.visibility = False
+        otp.save()
+        return HttpResponse('success')
+    else:
+        redirect('index')
 
 def lock_history(request):
     history  = History.objects.all()

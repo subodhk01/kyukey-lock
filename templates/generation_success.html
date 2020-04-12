@@ -17,13 +17,47 @@
         <link rel="stylesheet" href="{% static 'css/secondary.css' %}">
     </head>
     <body>
+        <script>
+            setTimeout(
+            function(){
+                $.ajax({
+                    method: "POST",
+                    url: "../../hide_otp",
+                    data: {
+                        'csrfmiddlewaretoken':"{{csrf_token}}",
+                        'id': "{{id}}"
+                    },
+                    success: function(data){
+                        $(".loading-otp").hide();
+                        $(".otp-info").fadeIn();
+
+                    },
+                    error: function(data) {
+                        console.log('error');
+                    }
+                })
+            }    
+            ,1500);
+            var count = 20;
+            setInterval(
+                function(){
+                    if(count>0){
+                        $(".count").text(count);
+                        console.log(count);
+                        count--;
+                    }
+                    else{
+                        window.location.href = "../../";
+                    }
+                }    
+            , 1000);
+        </script>
         <div class="secondary-outer-container">
             <div class="heading-container">
                 <div class="heading-inside">
                     <span>KyuKey</span>
                 </div>
             </div>
-
             <div class="content-container">
                 <nav class="navbar navbar-expand-md">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -44,28 +78,36 @@
             <div class="otp-generator-card">
                 <div class="card">
                     <div class="card-header">
-                        Lock History
+                        OTP successfully generated
                     </div>
                     <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <th>
-                                    <td>ID.</td>
-                                    <td>Time</td>
-                                    <td>Status</td>
-                                </th>
-                            </thead>
-                            <tbody>
-                                {% for entry in history %}
+                        <div class="loading-otp" style="text-align: center;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </div>
+                        <div class="otp-info"  style="display: none;">
+                            <div class="final-otp">
+                                <h1>{{otp.content}}</h1>
+                            </div>
+                            <table class="table table-bordered table-hover">
+                                <tbody>
                                     <tr>
-                                        <td>{{ entry.id }}</td>
-                                        <td>{{ entry.time }}</td>
-                                        <td>{{ entry.status }}</td>
+                                        <td>Name:</td>
+                                        <td>{{otp.name}}</td>
                                     </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                    <tr>
+                                        <td>Valid Till:</td>
+                                        <td>{{otp.valid_till}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="error-otp" style="display: none;">
+                            Unable to fetch OTP, please try again
+                        </div>
                     </div>
+                </div>
+                <div class="return-home">
+                    Automatically returning to Home in <span class="count"></span> seconds.
                 </div>
             </div>
             <div class="footer">
