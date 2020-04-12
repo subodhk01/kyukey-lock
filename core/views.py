@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse, Http404
 
 from .models import *
 import datetime
+from dateutil import tz
 
 
 def index(request):
@@ -42,6 +43,13 @@ def generate_otp(request):
     if request.method == "POST":
         validity = request.POST['validity']
         djvalidity = validity + ":00.000000+0530"
+        diff = ( datetime.datetime.strptime(djvalidity, "%Y-%m-%d %H:%M:%S.%f%z") - datetime.datetime.now().replace(tzinfo=tz.gettz('Asia/Kolkata')) )
+        print(diff.days)
+        print(diff.seconds)
+        if diff.seconds < 0 or diff.days < 0 :
+            lowerLimit = datetime.datetime.now()
+            lowerLimit = (str(lowerLimit)[0:16])
+            return render(request, 'generate_otp.html', {'lowerLimit': lowerLimit, 'msg':'Enter a Valid DateTime'})
         print(djvalidity)
         otp = OTP(
             name = request.POST['name'],
