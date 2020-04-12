@@ -28,23 +28,23 @@
                             if(data['status']=='u'){
                                 $('.outer-container').css('background','rgb(22, 199, 64)');
                                 $('meta[name=theme-color]').attr('content', 'rgb(22, 199, 64)');
-                                $('#locked-container').fadeOut();
-                                $('#warning-container').fadeOut();
+                                $('#locked-container').hide();
+                                $('#warning-container').hide();
                                 $('#unlocked-container').fadeIn();
                                 
                             }
                             else if(data['status']=='l'){
                                 $('.outer-container').css('background','rgb(15, 150, 228)');
                                 $('meta[name=theme-color]').attr('content', 'rgb(15, 150, 228)');
-                                $('#unlocked-container').fadeOut();
-                                $('#warning-container').fadeOut();
+                                $('#unlocked-container').hide();
+                                $('#warning-container').hide();
                                 $('#locked-container').fadeIn();
                             }
                             else{
                                 $('.outer-container').css('background','rgba(223, 34, 34, 0.918)');
                                 $('meta[name=theme-color]').attr('content', 'rgba(223, 34, 34, 0.918)');
-                                $('#unlocked-container').fadeOut();
-                                $('#locked-container').fadeOut();
+                                $('#unlocked-container').hide();
+                                $('#locked-container').hide();
                                 $('#warning-container').fadeIn();
                             }
                         },
@@ -52,8 +52,8 @@
                             console.log("I'm a magical error that even bypassed the try-except :-)");
                             $('.outer-container').css('background','rgba(223, 34, 34, 0.918)');
                             $('meta[name=theme-color]').attr('content', 'rgba(223, 34, 34, 0.918)');
-                            $('#unlocked-container').fadeOut();
-                            $('#locked-container').fadeOut();
+                            $('#unlocked-container').hide();
+                            $('#locked-container').hide();
                             $('#warning-container').fadeIn();                
                         }
                     })
