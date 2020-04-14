@@ -14,5 +14,5 @@ urlpatterns = [
     path('logout', views.user_logout, name="logout"),
 
     # API Views
-    path('otp_validation', views.opt_validation)
+    path('otp_validation/<otp>', views.opt_validation)
 ]
