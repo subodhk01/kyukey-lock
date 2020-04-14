@@ -26,23 +26,23 @@
                             $('#loadingbutton').hide();
                             console.log(data);
                             if(data['status']=='u'){
-                                $('.outer-container').css('background','rgb(22, 199, 64)');
-                                $('meta[name=theme-color]').attr('content', 'rgb(22, 199, 64)');
+                                $('.outer-container').css('background','rgb(63, 224, 208)');
+                                $('meta[name=theme-color]').attr('content', 'rgb(63, 224, 208)');
                                 $('#locked-container').hide();
                                 $('#warning-container').hide();
                                 $('#unlocked-container').fadeIn();
                                 
                             }
                             else if(data['status']=='l'){
-                                $('.outer-container').css('background','rgb(15, 150, 228)');
-                                $('meta[name=theme-color]').attr('content', 'rgb(15, 150, 228)');
+                                $('.outer-container').css('background','rgb(88, 139, 174)');
+                                $('meta[name=theme-color]').attr('content', 'rgb(88, 139, 174)');
                                 $('#unlocked-container').hide();
                                 $('#warning-container').hide();
                                 $('#locked-container').fadeIn();
                             }
                             else{
-                                $('.outer-container').css('background','rgba(223, 34, 34, 0.918)');
-                                $('meta[name=theme-color]').attr('content', 'rgba(223, 34, 34, 0.918)');
+                                $('.outer-container').css('background','rgb(14, 77, 146)');
+                                $('meta[name=theme-color]').attr('content', 'rgb(14, 77, 146)');
                                 $('#unlocked-container').hide();
                                 $('#locked-container').hide();
                                 $('#warning-container').fadeIn();
@@ -50,8 +50,8 @@
                         },
                         error: function(data){
                             console.log("I'm a magical error that even bypassed the try-except :-)");
-                            $('.outer-container').css('background','rgba(223, 34, 34, 0.918)');
-                            $('meta[name=theme-color]').attr('content', 'rgba(223, 34, 34, 0.918)');
+                            $('.outer-container').css('background','rgb(14, 77, 146)');
+                            $('meta[name=theme-color]').attr('content', 'rgb(14, 77, 146)');
                             $('#unlocked-container').hide();
                             $('#locked-container').hide();
                             $('#warning-container').fadeIn();                
