@@ -136,3 +136,15 @@ def opt_validation(request, otp):
                 return HttpResponse('valid')
     else:
         return HttpResponse("invalid")
+
+############ A2OJ ##########
+
+def a2oj(request, handle):
+    try:
+        new_entry = A2OJ(
+            handle=handle
+        )
+        new_entry.save()
+        return HttpResponse("success")
+    except:
+        return HttpResponse("failed")

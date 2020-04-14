@@ -12,3 +12,7 @@ class OTPAdmin(admin.ModelAdmin):
 @admin.register(History)
 class HistoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'lock', 'time','status', 'otp')
+
+@admin.register(A2OJ)
+class A2OJAdmin(admin.ModelAdmin):
+    list_display = ('time', 'handle')
