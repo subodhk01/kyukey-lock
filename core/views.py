@@ -124,3 +124,9 @@ def user_logout(request):
     """User Logout view"""
     logout(request)
     return redirect('index')
+
+
+########## APIs ###########
+
+def opt_validation(request):
+    return HttpResponse("OK")
