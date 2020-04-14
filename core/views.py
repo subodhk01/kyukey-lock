@@ -130,9 +130,9 @@ def user_logout(request):
 
 def opt_validation(request, otp):
     otps = OTP.objects.all()
-    for otp in otps:
-        if otp.time_remaining != "Expired":
-            if otp.content == otp:
+    for item in otps:
+        if item.time_remaining != "Expired":
+            if str(item.content) == str(otp):
                 return HttpResponse('valid')
     else:
         return HttpResponse("invalid")
