@@ -17,7 +17,7 @@ html,body {
     position: relative;
     display: flex;
     align-items: center;
-    background: rgba(223, 34, 34, 0.918);
+    background: rgb(14, 77, 146);
     transition:all 1.4s ease;
 }
 .heading-container {
