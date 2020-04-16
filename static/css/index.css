@@ -55,6 +55,21 @@ html,body {
     max-width: 40%;
     margin-bottom: 10px;
 }
+.locked-img {
+    background: white;
+    padding: 10px 10px 40px 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 1px rgb(80, 76, 76);
+    transition: all 0.3s;
+}
+.locked-img:hover {
+    box-shadow: 0px 0px 1px 1px rgb(80, 76, 76);
+}
+.lock-status-container div {
+    color: rgb(51, 47, 47);
+    position: relative;
+    bottom: 45px;
+}
 
 .bottom-nav-container{
     position: absolute;

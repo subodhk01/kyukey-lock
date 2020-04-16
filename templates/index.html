@@ -90,8 +90,12 @@
                 </button>
             </div>
             <div class="lock-status-container" id="locked-container" style="display: none;">
-                <img src="{% static 'images/locks/locked.png'  %}"><br>
                 <h2>LOCKED</h2>
+                <a href="/generate_otp"><img class="locked-img" src="{% static 'images/locks/locked.png'  %}"></a>
+                <br>
+                <div>
+                    Generate OTP
+                </div>
             </div>
             <div class="lock-status-container" id="unlocked-container" style="display: none;">
                 <img src="{% static 'images/locks/unlocked.png'  %}"><br>
