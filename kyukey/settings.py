@@ -32,7 +32,7 @@ EMAIL_HOST_PASSWORD = 'Evo@2019'
 EMAIL_USE_TLS = True
 
 ALLOWED_HOSTS = ['*']
-
+AUTH_USER_MODEL = 'core.User' 
 
 # Application definition
 

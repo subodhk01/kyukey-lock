@@ -1,5 +1,8 @@
 from django.contrib import admin
 from .models import *
+from django.contrib.auth.admin import UserAdmin
+
+admin.site.register(User, UserAdmin)
 
 @admin.register(Lock)
 class LockAdmin(admin.ModelAdmin):
