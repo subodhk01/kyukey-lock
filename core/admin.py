@@ -16,3 +16,4 @@ class HistoryAdmin(admin.ModelAdmin):
 @admin.register(A2OJ)
 class A2OJAdmin(admin.ModelAdmin):
     list_display = ('time', 'handle')
+    search_fields = ('handle')
