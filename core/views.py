@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, Http404
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 import datetime
@@ -124,6 +125,28 @@ def user_logout(request):
     """User Logout view"""
     logout(request)
     return redirect('index')
+
+########## AUTH APIs ##########
+@csrf_exempt
+def API_user_login(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            auth_token = {
+                "token":str(request.user.uuid),
+            }
+            return JsonResponse(auth_token)
+        else:
+            return HttpResponse("Invalid Credential", status=400)
+    else:
+        return HttpResponse("Bad Request",status=400)
+
+def API_user_logout(request):
+    logout(request)
+    return HttpResponse()
 
 
 ########## APIs ###########

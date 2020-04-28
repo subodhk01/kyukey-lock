@@ -13,6 +13,10 @@ urlpatterns = [
     path('login', views.user_login, name='login'),
     path('logout', views.user_logout, name="logout"),
 
+    # API Auth Views
+    path('api/auth/login', views.API_user_login),
+    path('api/auth/logout', views.API_user_logout),
+
     # API Views
     path('otp_validation/<otp>', views.opt_validation),
 
