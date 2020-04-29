@@ -32,7 +32,7 @@ EMAIL_HOST_PASSWORD = 'Evo@2019'
 EMAIL_USE_TLS = True
 
 ALLOWED_HOSTS = ['*']
-AUTH_USER_MODEL = 'core.User' 
+#AUTH_USER_MODEL = 'core.User' 
 
 # Application definition
 
@@ -89,6 +89,16 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+""" DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd4cf96oqqb41da',
+        'USER': 'dxpzvxbtxlznfc',
+        'PASSWORD': '802c615598b401378a7c3775046f60f026e079d98072aa76c06c28905fc68966',
+        'HOST': 'ec2-52-71-55-81.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+} """
 
 
 # Password validation

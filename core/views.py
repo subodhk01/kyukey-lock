@@ -136,7 +136,7 @@ def API_user_login(request):
         if user is not None:
             login(request, user)
             auth_token = {
-                "token":str(request.user.uuid),
+                "token":str(request.user.manager.uuid),
             }
             return JsonResponse(auth_token)
         else:
