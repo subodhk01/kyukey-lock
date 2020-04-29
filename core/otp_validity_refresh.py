@@ -31,7 +31,7 @@ class otpRefresh(object):
         users = User.objects.all()
         for user in users:
             try:
-                man = user.manager
+                man = user.manager.uuid
                 print('manager already exists: ', user)
             except:
                 user.manager = Manager()
