@@ -15,6 +15,7 @@ urlpatterns = [
 
     # API Auth Views
     path('api/auth/login', views.API_user_login),
+    path('api/auth/signup', views.API_user_signup),
     path('api/auth/logout', views.API_user_logout),
 
     # API Views

@@ -130,8 +130,14 @@ def user_logout(request):
 @csrf_exempt
 def API_user_login(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        try:
+            username = request.POST['username']
+        except:
+            return HttpResponse("username not found",status=400)
+        try:
+            password = request.POST['password']
+        except:
+            return HttpResponse("password not found",status=400)
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -141,6 +147,41 @@ def API_user_login(request):
             return JsonResponse(auth_token)
         else:
             return HttpResponse("Invalid Credential", status=400)
+    else:
+        return HttpResponse("Bad Request",status=400)
+
+@csrf_exempt
+def API_user_signup(request):
+    if request.method == "POST":
+        try:
+            username = request.POST['username']
+            password1 = request.POST['password1']
+            password2 = request.POST['password2']
+            email = request.POST['email']
+        except:
+            return HttpResponse("missing fields",status=400)
+        if password1 != password2:
+            return HttpResponse("passwords not matching",status=400)
+        try:
+            user = User.objects.create_user(
+                username = username,
+                email = email,
+                password = password1
+            )
+            user.save()
+            user.manager = Manager()
+            user.manager.save()
+        except:
+            return HttpResponse("username already exists",status=400)
+        user = authenticate(request, username=username, password=password1)
+        if user is not None:
+            login(request, user)
+            auth_token = {
+                "token":str(request.user.manager.uuid),
+            }
+            return JsonResponse(auth_token)
+        else:
+            return HttpResponse("unable to login user", status=400)
     else:
         return HttpResponse("Bad Request",status=400)
 
