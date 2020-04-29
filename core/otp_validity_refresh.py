@@ -31,12 +31,11 @@ class otpRefresh(object):
         users = User.objects.all()
         for user in users:
             try:
-                man = user.manager.uuid
-                print('manager already exists: ', user)
-            except:
                 user.manager = Manager()
                 user.manager.save()
                 print('saved manager for : ', user)
+            except:
+                print('manager already exists : ', user)
 
         response = self.get_response(request)
         return response
