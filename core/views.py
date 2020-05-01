@@ -185,6 +185,25 @@ def API_user_signup(request):
     else:
         return HttpResponse("Bad Request",status=400)
 
+@csrf_exempt
+def API_user_delete(request):
+    if not request.user.is_authenticated:
+        return HttpResponse("Unauthorised access",status=401)
+    if request.method == "DELETE":
+        try:
+            auth_token = request.META["HTTP_AUTHORIZATION"]
+            print(auth_token)
+            if str("Token " + str(request.user.manager.uuid)) == auth_token:
+                request.user.delete()
+                return JsonResponse( {'message':'success'} )
+            else:
+                return HttpResponse("Unauthorised access",status=401)
+        except:
+            return HttpResponse("Unauthorised access",status=401)
+        return HttpResponse()
+    else:
+        return HttpResponse("Bad Request",status=400)
+
 def API_user_logout(request):
     logout(request)
     return HttpResponse()
