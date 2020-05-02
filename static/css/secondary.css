@@ -71,7 +71,9 @@ body {
     text-align: center;
 }
 .login-inside {
-    width: 100%;
+    width: 500px;
+    max-width: 600px;
+    margin: auto;
     padding: 0px 30px;
 }
 .login-inside form {
