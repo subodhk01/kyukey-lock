@@ -1,15 +1,28 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
+from jsonfield import JSONField
 
 class Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, db_index=True)
     uuid = models.UUIDField(primary_key=True, default = uuid.uuid4, editable=False)
 
+class LockData(models.Model):
+    id = models.AutoField(primary_key=True)
+    lockid = models.ForeignKey(Lock)
+    features = JSONField(default={} , blank=True )
+    ## used for Easier conversion to pandas as json techniqually dicts
+    def __repr__(self):
+        return "<< Data ="+str(self.lockid)+" >>"
+    def __call__(self):
+        return self.features
+    ## later  compact version of feature can be returned
+    ## to make it simpler to analyse the important stuff
+
 class Lock(models.Model):
     id = models.AutoField(primary_key=True)
     status = models.CharField(max_length=10)
-
+    
     def __str__(self):
         return "%s: %s" % (self.id, self.status)
 
